@@ -117,11 +117,11 @@ no_load                       ; empty load vector for EhBASIC
 no_save                       ; empty save vector for EhBASIC
       RTS
 
-;LAB_accept_acia
+;LAB_accept
 ;      SEC                     ; flag byte received
 ;      RTS
 
-;LAB_reject_acia
+;LAB_reject
 ;      LDA #63
 ;      SEC		                  ; remap to ?
 ;      RTS
