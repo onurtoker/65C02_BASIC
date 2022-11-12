@@ -4,7 +4,7 @@
 
 This is a synchoronous 65C02 design. All FFs use the 50 MHz XTAL clock.
 
-The 65C02 is based on Arlet Otten's design with Jürgen Müller's modifications.
+The 65C02 is based on Arlet Ottens's design with Jürgen Müller's modifications.
 
 The ACIA is a simple UART adopted from Pong P. Chu's book.
 
