@@ -151,7 +151,7 @@ module DE2_Apple1(
 
 	wire RAM_SEL, RAM_SEL_DELAYED;
 	wire ACIA_SEL;
-	assign ACIA_SEL = ({CPU_AB[15:1], 1'b0} == 16'h8400); // ACIA addresses $8000-$8001
+	assign ACIA_SEL = ({CPU_AB[15:1], 1'b0} == 16'h8400); // ACIA addresses $8400-$8401
 	assign RAM_SEL = ~ACIA_SEL; 
 
 	myReg U_REG(.clk(clk_cpu), .reset(reset_cpu), .din(RAM_SEL), .dout(RAM_SEL_DELAYED));
