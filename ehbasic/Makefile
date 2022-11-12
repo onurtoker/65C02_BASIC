@@ -6,8 +6,8 @@ basic.bin: min_mon.o
 		-C basic.cfg \
 		min_mon.o
 
-min_mon.o: min_mon.asm basic.asm
-	$(CA65) --cpu 65C02 --feature labels_without_colons min_mon.asm
+min_mon.o: min_mon.s basic.s
+	$(CA65) --cpu 65C02 --feature labels_without_colons min_mon.s
 
 clean:
 	rm -f min_mon.o basic.bin

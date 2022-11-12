@@ -78,34 +78,38 @@ WAIT_ACIA_TX:
       BEQ WAIT_ACIA_TX
       PLA
       STA ACIA_TX             ; write byte
-      RTS
+      RTS 
 
 ACIAin
       LDA ACIA_STATUS         ; get ACIA status
       AND #$01                ; mask rx buffer status flag
       BEQ LAB_nobyw           ; branch if no byte waiting
       LDA ACIA_RX             ; get byte from ACIA data port
+      SEC
+      RTS
 
-      ; begin: is valid 
-
-      CMP #$00			; reject if MSB is 1 
-      BMI LAB_reject
-
-      CMP #$08
-      BEQ LAB_accept		; accept 0x08, i.e. BACKSPACE
-      CMP #$0A
-      BEQ LAB_accept		; accept 0x0A, i.e. LF
-      CMP #$0D
-      BEQ LAB_accept		; accept 0x0D, i.e. CR
-
-      CMP #$20
-      BMI LAB_reject		; reject is less than 0x20
-
-      CMP #$7F
-      BEQ LAB_reject		; reject 0x7f, i.e. DEL
-      
-      JMP LAB_accept		; accept
-      ; end: is valid
+;      ; begin: is valid 
+;
+;      CMP #00			      ; reject if MSB is 1 
+;      BMI LAB_reject
+;
+;      CMP #00
+;      BEQ LAB_accept		; accept 0x00, i.e. NUL
+;      CMP #08
+;      BEQ LAB_accept		; accept 0x08, i.e. BACKSPACE
+;      CMP #10
+;      BEQ LAB_accept		; accept 0x0A, i.e. LF
+;      CMP #13
+;      BEQ LAB_accept		; accept 0x0D, i.e. CR
+;
+;      CMP #32
+;      BMI LAB_reject		; reject is less than 0x20
+;
+;      CMP #$7F
+;      BEQ LAB_reject		; reject 0x7f, i.e. DEL
+;      
+;      JMP LAB_accept		; accept
+;      ; end: is valid
 
 LAB_nobyw
       CLC                     ; flag no byte received
@@ -113,13 +117,14 @@ no_load                       ; empty load vector for EhBASIC
 no_save                       ; empty save vector for EhBASIC
       RTS
 
-LAB_accept
-      SEC                     ; flag byte received
-      RTS
+;LAB_accept_acia
+;      SEC                     ; flag byte received
+;      RTS
 
-LAB_reject
-      CLC		      ; flag byte rejected
-      RTS
+;LAB_reject_acia
+;      LDA #63
+;      SEC		                  ; remap to ?
+;      RTS
 
 ; vector tables
 
