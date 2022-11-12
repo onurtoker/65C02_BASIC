@@ -66,8 +66,8 @@ module DE2_Apple1(
 	assign clk_cpu = CLOCK_50;								// cpu_clk is XTAL 50 MHz
 		
 
-	wire [15:0] addr;
-	wire [7:0] din, dout;	
+//	wire [15:0] addr;
+//	wire [7:0] din, dout;	
 	
 //	// 6502 CPU
 //	cpu_65c02 U1(.clk(clk_cpu), .reset(reset_cpu), 
@@ -125,7 +125,7 @@ module DE2_Apple1(
 	assign acia_wen = ACIA_SEL & CPU_WE;
 	assign acia_ren = ACIA_SEL & (~CPU_WE);
 	
-// ------------------------------------------------------------------------------------------ // TEST ROM
+// ------------------------------------------------------------------------------------------ // SYS MEM
 
 	wire [7:0] mem_in, mem_out;
 	wire [15:0] mem_addr;
@@ -133,8 +133,6 @@ module DE2_Apple1(
 	assign mem_addr = CPU_AB;
 	assign mem_in = CPU_DO;
 
-//	sys_mem U_SMEM(
-//		 .clk(clk_cpu), .addr(mem_addr), .WE(mem_wen), .ram_in(mem_in), .ram_out(mem_out));
 		 
 	smem U_SMEM(
 		.address(mem_addr),
@@ -157,7 +155,7 @@ module DE2_Apple1(
 	myReg U_REG(.clk(clk_cpu), .reset(reset_cpu), .din(RAM_SEL), .dout(RAM_SEL_DELAYED));
 	
 	assign CPU_DI = RAM_SEL_DELAYED ? mem_out : acia_out;
-
+	
 // ------------------------------------------------------------------------------------------ // DEBUG RELATED 
 	
 	assign GPIO[0] 	= tx;
