@@ -70,28 +70,6 @@ ACIA_STATUS  = $8401
 ACIAsetup
       RTS					  ; ACIA is preconfigured in Verilog
 
-;ACIAout
-;      STA ACIA_TX             ; write byte
-;      JSR ACIAdelay           ; delay because of bug
-;      RTS
-;
-;ACIAdelay
-;      PHY                     ; Save Y Reg
-;      PHX                     ; Save X Reg
-;DELAY_LOOP
-;      LDY   #100              ; Get delay value (clock rate in MHz 2 clock cycles)
-;MINIDLY
-;      LDX   #$68              ; Seed X reg
-;DELAY_1
-;      DEX                     ; Decrement low index
-;      BNE   DELAY_1           ; Loop back until done
-;      DEY                     ; Decrease by one
-;      BNE   MINIDLY           ; Loop until done
-;      PLX                     ; Restore X Reg
-;      PLY                     ; Restore Y Reg
-;DELAY_DONE
-;      RTS                     ; Delay done, return
-
 ACIAout
       PHA
 WAIT_ACIA_TX:
@@ -107,12 +85,40 @@ ACIAin
       AND #$01                ; mask rx buffer status flag
       BEQ LAB_nobyw           ; branch if no byte waiting
       LDA ACIA_RX             ; get byte from ACIA data port
-      SEC                     ; flag byte received
-      RTS
+
+      ; begin: is valid 
+
+      CMP #$00			; reject if MSB is 1 
+      BMI LAB_reject
+
+      CMP #$08
+      BEQ LAB_accept		; accept 0x08, i.e. BACKSPACE
+      CMP #$0A
+      BEQ LAB_accept		; accept 0x0A, i.e. LF
+      CMP #$0D
+      BEQ LAB_accept		; accept 0x0D, i.e. CR
+
+      CMP #$20
+      BMI LAB_reject		; reject is less than 0x20
+
+      CMP #$7F
+      BEQ LAB_reject		; reject 0x7f, i.e. DEL
+      
+      JMP LAB_accept		; accept
+      ; end: is valid
+
 LAB_nobyw
       CLC                     ; flag no byte received
 no_load                       ; empty load vector for EhBASIC
 no_save                       ; empty save vector for EhBASIC
+      RTS
+
+LAB_accept
+      SEC                     ; flag byte received
+      RTS
+
+LAB_reject
+      CLC		      ; flag byte rejected
       RTS
 
 ; vector tables
