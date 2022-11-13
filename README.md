@@ -15,3 +15,4 @@ Future work: Add serial terminal hardware, e.g. https://github.com/AndresNavarro
 All strict synchoronous design suggestions are welcome.
 
 
+![plot](completeSystem.png)
