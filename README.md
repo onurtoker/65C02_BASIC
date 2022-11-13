@@ -20,7 +20,7 @@ A complete computer system with keyboard, monitor, and BASIC interpreter.
 
 This system does not need FreeRTOS, embedded linux, Raspberry Pi, laptop, tablet or similar advanced technologies. It is a minimalist design.
 
-The VT100 box is PIC24MX microcontroller system purchased from eBay, functionally similar to vt52-fpga.
+The VT100 box is a PIC24MX microcontroller system purchased from eBay, functionally similar to vt52-fpga.
 
 You can also use your laptop as a VT100 emulator (Use PuTTY or its variants), but without a laptop it looks more "organic".
 
