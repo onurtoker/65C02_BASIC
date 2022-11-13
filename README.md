@@ -14,5 +14,15 @@ Future work: Add serial terminal hardware, e.g. https://github.com/AndresNavarro
 
 All strict synchoronous design suggestions are welcome.
 
-
 ![plot](completeSystem.png)
+
+A complete computer system with keyboard, monitor, and BASIC interpreter.
+
+This project has no FreeRTOS, no embedded linux, no Raspberry Pi or similar advanced technologies.
+
+The VT100 box is PIC24MX microcontroller system purchased from eBay, functionally similar to vt52-fpga.
+
+You can also use your laptop as a VT100 emulator (Use PuTTY or its variants), but without a laptop it looks more "organic".
+
+
+
