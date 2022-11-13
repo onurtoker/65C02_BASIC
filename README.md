@@ -18,7 +18,7 @@ All strict synchoronous design suggestions are welcome.
 
 A complete computer system with keyboard, monitor, and BASIC interpreter.
 
-This project has no FreeRTOS, no embedded linux, no Raspberry Pi or similar advanced technologies.
+This system does not need FreeRTOS, embedded linux, Raspberry Pi, laptop, tablet or similar advanced technologies. It is a minimalist design.
 
 The VT100 box is PIC24MX microcontroller system purchased from eBay, functionally similar to vt52-fpga.
 
